@@ -9,14 +9,15 @@ from tensorflow.python.keras import backend as K # Nos permite matar subprocesos
 
 K.clear_session()
 
-datos_entrenamiento = './datos_entrenamiento'
-datos_prueba = './datos_prueba'
+# datos_entrenamiento = './img/datos_entrenamiento'
+datos_entrenamiento = './data_train'
+datos_prueba = './data_test'
 
 ## Parametros
 
 # 'epocas = 20' Numero de veces que vamos a
 # iterar sobre nuestros datos de entrenamientos
-epocas = 20 
+epocas = 5
 
 # Ajustamos el tamaño de las imagenes
 altura, longitud = 100, 100
@@ -24,9 +25,9 @@ altura, longitud = 100, 100
 # Cantidad de Imagenes
 cantidad_datos = 57
 
-# Numero de veces que se va a procesar la 
+# 'pasos = 1000' Numero de veces que se va a procesar la 
 # información en cada una de las epocas
-pasos = 1000
+pasos = 10
 
 pasos_validacion = 200
 
@@ -37,20 +38,22 @@ tamano_filtro1 = (3,3)
 tamano_filtro2 = (2,2)
 
 tamano_pool = (2,2)
-clases=1
+clases = 2
 
 # Learning Rate 
-lr=0.0005
+lr = 0.0005
 
 
 ## PreProcesamiento de Imagenes
 
 entrenamiento_datagen = ImageDataGenerator(
     rescale = 1./255,
-    shear_range = 0.3,
-    zoom_range = 0.3,
+    shear_range = 0.2,
+    zoom_range = 0.2,
     horizontal_flip = True
 )
+
+print('entrenamiento_datagen ::::::::::: ', entrenamiento_datagen)
 
 validacion_datagen = ImageDataGenerator(
     rescale = 1./255
@@ -63,12 +66,15 @@ imagen_entrenamiento = entrenamiento_datagen.flow_from_directory(
     class_mode = 'categorical'
 )
 
+print('imagen_entrenamiento :::::::::::: ', imagen_entrenamiento)
+
 imagen_validacion = validacion_datagen.flow_from_directory(
     datos_prueba,
     target_size = (altura, longitud),
     batch_size = cantidad_datos,
     class_mode = 'categorical'
 )
+
 
 ## Creando la Red CNN
 
@@ -116,7 +122,7 @@ cnn.add(
 )
 
 cnn.compile(
-    loss='categorical_crossentropy',
+    loss='sparse_categorical_crossentropy',
     optimizer = optimizers.Adam(lr=lr),
     metrics = ['accuracy']
 )
@@ -129,10 +135,10 @@ cnn.fit(
     validation_steps = pasos_validacion
 )
 
-div = './modelo/'
+target_dir = './modelo/'
 
-if not os.path.exists(dir):
-    os.mkdir(dir)
+if not os.path.exists(target_dir):
+    os.mkdir(target_dir)
 
 cnn.save('./modelo/modelo.h5')
 cnn.save_weights('./modelo/pesos.h5')
