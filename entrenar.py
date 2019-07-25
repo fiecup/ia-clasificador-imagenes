@@ -9,7 +9,6 @@ from tensorflow.python.keras import backend as K # Nos permite matar subprocesos
 
 K.clear_session()
 
-# datos_entrenamiento = './img/datos_entrenamiento'
 datos_entrenamiento = './data_train'
 datos_prueba = './data_test'
 
@@ -17,17 +16,17 @@ datos_prueba = './data_test'
 
 # 'epocas = 20' Numero de veces que vamos a
 # iterar sobre nuestros datos de entrenamientos
-epocas = 5
+epocas = 20
 
 # Ajustamos el tamaño de las imagenes
-altura, longitud = 100, 100
+altura, longitud = 150, 150
 
 # Cantidad de Imagenes
 cantidad_datos = 57
 
 # 'pasos = 1000' Numero de veces que se va a procesar la 
 # información en cada una de las epocas
-pasos = 10
+pasos = 1000
 
 pasos_validacion = 200
 
@@ -143,4 +142,4 @@ if not os.path.exists(target_dir):
 cnn.save('./modelo/modelo.h5')
 cnn.save_weights('./modelo/pesos.h5')
 
-print ('¡Has ejecutado el entrenamiento!')
+print ('¡Has ejecutado el ENTRENAMIENTO, Satisfactoriamente!')
