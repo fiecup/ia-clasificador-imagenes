@@ -1,0 +1,4 @@
+tensorflow
+Keras
+Pillow
+SciPy
