@@ -9,9 +9,9 @@ source env/bin/activate       # Activar entorno virtual.
 deactivate                    # Para salir del entorno virtual (EJECUTAR SOLO SI YA NO LO VAS A USAR).
 ```
 
-2. Ejecuta el archivo _install.sh_ (si estas en MAC OSX o GNU/Linux, funcionará), esto instalara las librerias necesarias del proyecto.
+2. Ejecuta el archivo _requirements.txt_ , esto instalara las librerias necesarias del proyecto.
 ```console
-source install-lib.sh
+pip3 install -r requirements.txt
 ```
 
 3. Ejecuta primeramente el _entrenar.py_, para que puedar entrenar la red neuronal y crear el modelo.
